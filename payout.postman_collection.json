@@ -18,14 +18,8 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 201\", function () {",
-									"    pm.response.to.have.status(201);",
-									"});",
-									"",
-									"const responseJson = pm.response.json();",
-									"const token_2 = responseJson.token;",
-									"pm.environment.set(\"token_2\",token_2);",
-									""
+									"var json_obj = JSON.parse(responseBody);\r",
+									"pm.globals.set(\"token_2\", json_obj.token);"
 								],
 								"type": "text/javascript",
 								"packages": {}
@@ -37,7 +31,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"userId\": \"40127664\",\n  \"apiKey\": \"se20Y1PUupUVk-hbQBsFfqf7bzZn1-3r0Q-bikbC\"\n}",
+							"raw": "{\r\n  \"userId\": \"40127664\",\r\n  \"apiKey\": \"se20Y1PUupUVk-hbQBsFfqf7bzZn1-3r0Q-bikbC\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -558,6 +552,23 @@
 								"payment-links",
 								"{{linkID}}",
 								"payment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "testforjenkins",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://www.baidu.com",
+							"protocol": "http",
+							"host": [
+								"www",
+								"baidu",
+								"com"
 							]
 						}
 					},
