@@ -1,0 +1,597 @@
+{
+	"info": {
+		"_postman_id": "894bb318-975e-4442-bb10-112a089dda98",
+		"name": "payout",
+		"description": "# 🚀 Get started here\n\nThis template guides you through CRUD operations (GET, POST, PUT, DELETE), variables, and tests.\n\n## 🔖 **How to use this template**\n\n#### **Step 1: Send requests**\n\nRESTful APIs allow you to perform CRUD operations using the POST, GET, PUT, and DELETE HTTP methods.\n\nThis collection contains each of these [request](https://learning.postman.com/docs/sending-requests/requests/) types. Open each request and click \"Send\" to see what happens.\n\n#### **Step 2: View responses**\n\nObserve the response tab for status code (200 OK), response time, and size.\n\n#### **Step 3: Send new Body data**\n\nUpdate or add new data in \"Body\" in the POST request. Typically, Body data is also used in PUT request.\n\n```\n{\n    \"name\": \"Add your name in the body\"\n}\n\n ```\n\n#### **Step 4: Update the variable**\n\nVariables enable you to store and reuse values in Postman. We have created a [variable](https://learning.postman.com/docs/sending-requests/variables/) called `base_url` with the sample request [https://postman-api-learner.glitch.me](https://postman-api-learner.glitch.me). Replace it with your API endpoint to customize this collection.\n\n#### **Step 5: Add tests in the \"Tests\" tab**\n\nTests help you confirm that your API is working as expected. You can write test scripts in JavaScript and view the output in the \"Test Results\" tab.\n\n<img src=\"https://content.pstmn.io/b5f280a7-4b09-48ec-857f-0a7ed99d7ef8/U2NyZWVuc2hvdCAyMDIzLTAzLTI3IGF0IDkuNDcuMjggUE0ucG5n\">\n\n## 💪 Pro tips\n\n- Use folders to group related requests and organize the collection.\n- Add more [scripts](https://learning.postman.com/docs/writing-scripts/intro-to-scripts/) in \"Tests\" to verify if the API works as expected and execute workflows.\n    \n\n## 💡Related templates\n\n[API testing basics](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9a37a28-055b-49cd-8c7e-97494a21eb54&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[API documentation](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9c28f47-1253-44af-a2f3-20dce4da1f18&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[Authorization methods](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=31a9a6ed-4cdf-4ced-984c-d12c9aec1c27&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33400951",
+		"_collection_link": "https://galactic-trinity-367893.postman.co/workspace/KVBAUTOTest-Workspace~c8b8b2ef-9830-40ee-85c1-4f015dd709f3/collection/33400951-894bb318-975e-4442-bb10-112a089dda98?action=share&source=collection_link&creator=33400951"
+	},
+	"item": [
+		{
+			"name": "payout_success",
+			"item": [
+				{
+					"name": "鉴权",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"const responseJson = pm.response.json();",
+									"const token_2 = responseJson.token;",
+									"pm.environment.set(\"token_2\",token_2);",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"40127664\",\n  \"apiKey\": \"se20Y1PUupUVk-hbQBsFfqf7bzZn1-3r0Q-bikbC\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/security/v2/auth/authenticate",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"security",
+								"v2",
+								"auth",
+								"authenticate"
+							]
+						},
+						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+					},
+					"response": []
+				},
+				{
+					"name": "createPayer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"var Object_json = JSON.parse(responseBody);\r",
+									"var payerID = Object_json.data.payerID;\r",
+									"pm.environment.set(\"payerID\",payerID);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var randomNum = Math.random();\r",
+									"pm.globals.set(\"randomNum\",randomNum);\r",
+									"console.log(randomNum);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_2}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Token",
+								"value": "0b1b4b93-9456-4557-a5bd-97978429e5cd",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"wu liehao \",\r\n  \"email\": \"wuliehaokvb_{{$randomInt}}@2925.com\",\r\n  \"areaCode\": \"852\",\r\n  \"phone\": \"98765432\",\r\n  \"address\": \"Hong Kong\",\r\n  \"city\": \"Hong Kong\",\r\n  \"country\": \"Hong Kong\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/payment/v2/payers",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"payment",
+								"v2",
+								"payers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createPayment-links",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"var json_obj = JSON.parse(responseBody);\r",
+									"var requestID = json_obj.data.requestID;\r",
+									"var linkID = json_obj.data.linkID;\r",
+									"pm.environment.set(\"requestID\",requestID);\r",
+									"pm.environment.set(\"linkID\",linkID);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_2}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"currency\": \"HKD\",\r\n  \"amount\": \"999.22\",\r\n  \"payerID\": {{payerID}},\r\n  \"purposeOfTransaction\": \"ACCOUNTING_SERVICE\",\r\n  \"description\": \"test 1558\",\r\n  \"skip3ds\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/payment/v2/payment-links",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"payment",
+								"v2",
+								"payment-links"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createSessionCard",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"responseBody = responseBody.replace(\"verifiedTokens:session\",\"verifiedTokens_session\");\r",
+									"console.info(responseBody);\r",
+									"var json_obj = JSON.parse(responseBody);\r",
+									"var session_card = json_obj._links.verifiedTokens_session.href;\r",
+									"pm.environment.set(\"session_card\",session_card);\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "ak_bmsc=07E7FC0B991A75F4BA775DC4F893D179~000000000000000000000000000000~YAAQBYpFy9XX6yyOAQAAjKD+OxcvjKGWVl0A6YO5i8OK1tc9LKbTCL2fDpKsp9p8gY62gP0oKgN1GDf8V8kYhd7ilEoW2xK/ls04tPFE9JzBwE+Mzb03KCJJuJAWq2UN2GxqwWnmQ1yP+fGa8HoXfH7lNbwGSbTEckhtop/+5rkiiB7T0HEF7/easAfa4ySDv7/gHaEt9SRdH5DS7OIzB3eln9/GpnVsjGhfB/CZePKMEPDWnm1gD7MhIKbQstVkq+dMViYWTs/OlOwOojbAmah+S0QjL2BuI7gwY0v667RzC1dV6VfyuryAKsy0ipxYe4JDpriyBcWGWItrehw2864mol1GQYRrDnD7KUdouqJITMFuTeT8O6X5lMGEEU+Ycjqz/S7tr74H;",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Content-type",
+								"value": "application/vnd.worldpay.verified-tokens-v1.hal+json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"identity\": \"d86afcc6-3b09-4cdc-8c89-6bd8195aac75\",\r\n\t\"cardExpiryDate\": {\r\n\t\t\"month\": 4,\r\n\t\t\"year\": 2024\r\n\t},\r\n\t\"cvc\": \"111\",\r\n\t\"cardNumber\": \"4000000000001000\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl_worldpay}}/verifiedTokens/sessions",
+							"host": [
+								"{{baseUrl_worldpay}}"
+							],
+							"path": [
+								"verifiedTokens",
+								"sessions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createSessionCVC",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"responseBody = responseBody.replace(\"sessions:session\",\"sessions_session\");\r",
+									"console.info(responseBody);\r",
+									"var json_obj = JSON.parse(responseBody);\r",
+									"var session_cvc = json_obj._links.sessions_session.href;\r",
+									"pm.environment.set(\"session_cvc\",session_cvc);\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true,
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "ak_bmsc=07E7FC0B991A75F4BA775DC4F893D179~000000000000000000000000000000~YAAQBYpFy9XX6yyOAQAAjKD+OxcvjKGWVl0A6YO5i8OK1tc9LKbTCL2fDpKsp9p8gY62gP0oKgN1GDf8V8kYhd7ilEoW2xK/ls04tPFE9JzBwE+Mzb03KCJJuJAWq2UN2GxqwWnmQ1yP+fGa8HoXfH7lNbwGSbTEckhtop/+5rkiiB7T0HEF7/easAfa4ySDv7/gHaEt9SRdH5DS7OIzB3eln9/GpnVsjGhfB/CZePKMEPDWnm1gD7MhIKbQstVkq+dMViYWTs/OlOwOojbAmah+S0QjL2BuI7gwY0v667RzC1dV6VfyuryAKsy0ipxYe4JDpriyBcWGWItrehw2864mol1GQYRrDnD7KUdouqJITMFuTeT8O6X5lMGEEU+Ycjqz/S7tr74H;",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Content-type",
+								"value": "application/vnd.worldpay.sessions-v1.hal+json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/vnd.worldpay.sessions-v1.hal+json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"identity\": \"d86afcc6-3b09-4cdc-8c89-6bd8195aac75\",\r\n\t\"cvc\": \"111\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://try.access.worldpay.com/sessions/payments/cvc",
+							"protocol": "https",
+							"host": [
+								"try",
+								"access",
+								"worldpay",
+								"com"
+							],
+							"path": [
+								"sessions",
+								"payments",
+								"cvc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "checkout-devicedata",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"var json_obj = JSON.parse(responseBody);\r",
+									"var transactionReference = json_obj.data.transactionReference;\r",
+									"var deviceDataCollection = json_obj.data.deviceDataCollection;\r",
+									"pm.environment.set(\"transactionReference\",transactionReference);\r",
+									"pm.environment.set(\"deviceDataCollection\",deviceDataCollection);\r",
+									"pm.environment.set(\"ddc_jwt\", deviceDataCollection.jwt);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_2}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"cardHolderName\": \"WU\",\r\n  \"sessionCard\": \"{{session_card}}\",\r\n  \"sessionCvc\":  \"{{session_cvc}}\",\r\n  \"relationship\": \"BUSINESS_OWNER_SHAREHOLDER\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/payment/v2/payment-links/{{linkID}}/device-data",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"payment",
+								"v2",
+								"payment-links",
+								"{{linkID}}",
+								"device-data"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DDC",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"const test = cheerio.load(responseBody);\r",
+									"var referenceId = test(\"#referenceId\").attr(\"value\");\r",
+									"console.info(\"----------\" + referenceId);\r",
+									"pm.environment.set(\"referenceId\", referenceId);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true,
+							"user-agent": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
+								"type": "text"
+							},
+							{
+								"key": "Origin",
+								"value": "https://testgcfxweb.kvbgc.com",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "JWT",
+									"value": "{{ddc_jwt}}",
+									"type": "text"
+								},
+								{
+									"key": "Bin",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://centinelapistag.cardinalcommerce.com/V1/Cruise/Collect",
+							"protocol": "https",
+							"host": [
+								"centinelapistag",
+								"cardinalcommerce",
+								"com"
+							],
+							"path": [
+								"V1",
+								"Cruise",
+								"Collect"
+							],
+							"query": [
+								{
+									"key": "JWT",
+									"value": "{{ddc_jwt}}",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "payment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_2}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.worldpay.verified-tokens-v1.hal+json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"transactionReference\": \"{{transactionReference}}\",\r\n  \"sessionId\": \"{{referenceId}}\",\r\n  \"userAgent\": \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/payment/v2/payment-links/{{linkID}}/payment",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"payment",
+								"v2",
+								"payment-links",
+								"{{linkID}}",
+								"payment"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "token_2",
+			"value": ""
+		}
+	]
+}
