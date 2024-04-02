@@ -19,7 +19,7 @@
 							"script": {
 								"exec": [
 									"var json_obj = JSON.parse(responseBody);\r",
-									"pm.globals.set(\"token_2\", json_obj.token);"
+									"pm.environment.set(\"token_2\", json_obj.token);"
 								],
 								"type": "text/javascript",
 								"packages": {}
